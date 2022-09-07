@@ -4,9 +4,17 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <>
-      <Link to="/">todo(0)</Link>
-      <Link to="/completed">complted(0)</Link>
-      <Link to="/all">All(0)</Link>
+      <div className="font-head text-subHeadline capitalize flex items-center justify-center gap-16 bg-secondary h-12 ">
+        <Link to="/" className=" hover:text-gray-300   ">
+          todo(0)
+        </Link>
+        <Link to="/completed" className=" hover:hover:text-gray-300  ">
+          complted(0)
+        </Link>
+        <Link to="/all" className="hover:text-gray-300 ">
+          All(0)
+        </Link>
+      </div>
     </>
   );
 };
