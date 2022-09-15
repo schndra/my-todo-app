@@ -4,12 +4,12 @@ import TodoItem from "../components/TodoItem";
 
 const Home = () => {
   const { items } = useOutletContext();
+  const homeItems = items.filter((item) => item.completed === false);
+
   return (
     <>
-      {items.map((item) => {
-        if (item.completed === false) {
-          return <TodoItem key={item.id} {...item} />;
-        }
+      {homeItems.map((item) => {
+        return <TodoItem key={item.id} {...item} />;
       })}
     </>
   );
