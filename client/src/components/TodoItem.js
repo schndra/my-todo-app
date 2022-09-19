@@ -4,13 +4,17 @@ import { FaCheckSquare } from "react-icons/fa";
 import { useOutletContext } from "react-router-dom";
 
 const TodoItem = (props) => {
+  const { completedTodo, removeTodo } = useOutletContext();
   const { id, title, completed } = props;
-  const {} = useOutletContext();
 
   return (
     <>
       <li className="list-none flex items-center mt-2 px-2">
-        <button type="button" className="mr-2">
+        <button
+          type="button"
+          className="mr-2"
+          onClick={() => completedTodo(id)}
+        >
           {/* if completed true make the check box text-primary */}
           <FaCheckSquare
             className={`${
@@ -28,8 +32,12 @@ const TodoItem = (props) => {
           >
             {title}
           </p>
-          <button type="button">
-            <FaTrash className="text-primary hover:animate-bounce" />
+          <button
+            type="button"
+            onClick={() => removeTodo(id)}
+            className="hover:animate-bounce duration-500"
+          >
+            <FaTrash className="text-primary " />
           </button>
         </div>
       </li>
