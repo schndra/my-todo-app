@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
-  const { refContainer } = props;
-  console.log(refContainer);
+  const { todoCount } = props;
+  console.log(todoCount);
 
   return (
     <>
@@ -12,19 +12,19 @@ const Navbar = (props) => {
           to="/"
           className=" hover:text-gray-300 hover:scale-125 hover:transition-all  "
         >
-          todo({`${refContainer.todo || 0}`})
+          todo({todoCount.homeCount})
         </Link>
         <Link
           to="/completed"
           className=" hover:hover:text-gray-300  hover:scale-125 hover:transition-all "
         >
-          complted({`${refContainer.completedTodo || 0}`})
+          complted({todoCount.completedCount})
         </Link>
         <Link
           to="/all"
           className="hover:text-gray-300 hover:scale-125 hover:transition-all "
         >
-          All({`${refContainer.allTodo || 0}`})
+          All({todoCount.totalCount})
         </Link>
       </div>
     </>
