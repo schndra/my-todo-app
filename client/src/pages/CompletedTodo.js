@@ -7,7 +7,7 @@ const CompletedTodo = () => {
   const { items } = useOutletContext();
   const completedItems = items.filter((item) => item.completed === true);
 
-  if (completedItems.length === 0) {
+  if (items.length === 0) {
     return (
       <div className="w-3/4 h-2 bg-tertiary rounded-2xl mx-auto mt-5 animate-bounce"></div>
     );
