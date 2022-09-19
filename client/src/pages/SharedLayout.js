@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 
 import { v4 as uuidv4 } from "uuid";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 // import dummyData from "../data";
 
 const getLocalStorage = () => {
@@ -26,21 +26,13 @@ const SharedLayout = () => {
     homeCount: 0,
   });
 
-  // const [isCompleted, setIsCompleted] = useState(false);
+  const refContainer = useRef(null);
 
-  // const todoCompleted = (id) => {
-  //   const completedTodo = items.find((item) => item.id === id);
-  //   const newObj = { ...completedTodo, completed: true };
-  //   setItems([...items, newObj]);
-  //   console.log(items);
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     const newTodo = { id: uuidv4(), title, completed: false };
     setItems([...items, newTodo]);
     setTitle("");
-    // console.log(newTodo);
-    // console.log(items);
   };
 
   const completedTodo = (id) => {
@@ -70,6 +62,10 @@ const SharedLayout = () => {
   };
 
   useEffect(() => {
+    refContainer.current.focus();
+  });
+
+  useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
@@ -89,6 +85,7 @@ const SharedLayout = () => {
               name="title"
               className="w-3/4 border border-gray-300 rounded-md mr-3 px-2 py-1 font-body text-cardhead "
               value={title}
+              ref={refContainer}
               onChange={(e) => setTitle(e.target.value)}
             />
             <button className="bg-primary font-body font-black  text-buttonTxt rounded-lg px-2  hover:bg-tertiary  ">
