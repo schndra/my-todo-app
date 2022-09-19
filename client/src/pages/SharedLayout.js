@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 
 import { v4 as uuidv4 } from "uuid";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 // import dummyData from "../data";
 
 const getLocalStorage = () => {
@@ -20,7 +20,13 @@ const getLocalStorage = () => {
 const SharedLayout = () => {
   const [items, setItems] = useState(getLocalStorage());
   const [title, setTitle] = useState("");
-  const refContainer = useRef(0);
+  const [todoCount, setTodoCount] = useState({
+    totalCount: 0,
+    completedCount: 0,
+    homeCount: 0,
+  });
+
+  // const [isCompleted, setIsCompleted] = useState(false);
 
   // const todoCompleted = (id) => {
   //   const completedTodo = items.find((item) => item.id === id);
@@ -37,20 +43,39 @@ const SharedLayout = () => {
     // console.log(items);
   };
 
+  const completedTodo = (id) => {
+    let temp = items.map((item) => {
+      if (item.id === id) {
+        return { ...item, completed: true };
+      }
+      return item;
+    });
+
+    setItems(temp);
+  };
+
+  const removeTodo = (id) => {
+    setItems(items.filter((item) => item.id !== id));
+  };
+
+  const getCounts = () => {
+    const homeItems = items.filter((item) => item.completed === false);
+    const completedItems = items.filter((item) => item.completed === true);
+    setTodoCount({
+      ...todoCount,
+      homeCount: homeItems.length,
+      completedCount: completedItems.length,
+      totalCount: items.length,
+    });
+  };
+
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));
   }, [items]);
 
-  // all toDo count
-  // useEffect(() => {
-  //   // refContainer.todo = items.filter((item) => item.completed === false).length;
-  //   // refContainer.allTodo = items.length;
-  //   // refContainer.completedTodo = items.filter(
-  //   //   (item) => item.completed === true
-  //   // ).length;
-  //   // console.log(refContainer);
-
-  // }, [items]);
+  useEffect(() => {
+    getCounts();
+  }, [items]);
 
   return (
     <>
@@ -71,8 +96,8 @@ const SharedLayout = () => {
             </button>
           </div>
         </form>
-        <Navbar refContainer={refContainer} />
-        <Outlet context={{ items, setItems, refContainer }} />
+        <Navbar todoCount={todoCount} />
+        <Outlet context={{ items, setItems, completedTodo, removeTodo }} />
       </section>
     </>
   );
