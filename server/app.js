@@ -2,8 +2,11 @@ import express from "express";
 import * as dotenv from "dotenv";
 dotenv.config();
 const app = express();
-
+import connectDB from "./config/connect.js";
 import todoRouter from "./routes/todo.js";
+
+import notFoundMiddleware from "./middleware/not-found.js";
+import errorHandlerMiddleware from "./middleware/error-hander.js";
 
 app.use(express.json());
 
@@ -19,7 +22,17 @@ app.get("/:id", (req, res) => {
 //   res.send("its working bish");
 // });
 
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
 const port = process.env.PORT;
-app.listen(port, () => {
-  return console.log(`listening on port ${port}...`);
-});
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URL);
+    app.listen(port, console.log(`listening on port ${port}...`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
