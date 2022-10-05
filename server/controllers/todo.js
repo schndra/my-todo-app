@@ -1,9 +1,16 @@
+import Todo from "../models/Todo.js";
+
 export const getTodos = (req, res) => {
   res.send("get todo");
 };
 
-export const createTodo = (req, res) => {
-  res.json("create todo");
+export const createTodo = async (req, res, next) => {
+  try {
+    const todo = await Todo.create(req.body);
+    res.status(201).json(todo);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const completedTodo = (req, res) => {
