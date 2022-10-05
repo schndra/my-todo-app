@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Navbar = (props) => {
@@ -8,7 +8,7 @@ const Navbar = (props) => {
 
   return (
     <>
-      <div className="font-head text-subHeadline capitalize flex items-center justify-center gap-16 bg-secondary h-12 ">
+      <div className="font-head text-subHeadline capitalize flex items-center justify-center gap-16  bg-secondary h-12 ">
         <NavLink
           to="/"
           className={({ isActive }) =>

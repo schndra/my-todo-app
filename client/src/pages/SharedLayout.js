@@ -20,6 +20,7 @@ const getLocalStorage = () => {
 const SharedLayout = () => {
   const [items, setItems] = useState(getLocalStorage());
   const [title, setTitle] = useState("");
+  const [isError, setIsError] = useState(false);
   const [todoCount, setTodoCount] = useState({
     totalCount: 0,
     completedCount: 0,
@@ -30,9 +31,14 @@ const SharedLayout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newTodo = { id: uuidv4(), title, completed: false };
-    setItems([...items, newTodo]);
-    setTitle("");
+    if (!title) {
+      setIsError(true);
+    } else {
+      const newTodo = { id: uuidv4(), title, completed: false };
+      setItems([...items, newTodo]);
+      setTitle("");
+      setIsError(false);
+    }
   };
 
   const completedTodo = (id) => {
