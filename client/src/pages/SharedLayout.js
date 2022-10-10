@@ -43,12 +43,25 @@ const SharedLayout = () => {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/api/v1/todos");
+      setItems(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title) {
       setIsError(true);
     } else {
-      const newTodo = { id: uuidv4(), title, completed: false };
+      const newTodo = { title, completed: false };
       createTodo(newTodo);
       setItems([...items, newTodo]);
       setTitle("");
@@ -58,7 +71,7 @@ const SharedLayout = () => {
 
   const completedTodo = (id) => {
     let temp = items.map((item) => {
-      if (item.id === id) {
+      if (item._id === id) {
         return { ...item, completed: true };
       }
       return item;
@@ -68,7 +81,7 @@ const SharedLayout = () => {
   };
 
   const removeTodo = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+    setItems(items.filter((item) => item._id !== id));
   };
 
   const getCounts = () => {
@@ -93,16 +106,6 @@ const SharedLayout = () => {
   useEffect(() => {
     getCounts();
   }, [items]);
-
-  // useEffect(()=>{
-  //   const fetchData = async()=>{
-  //     try {
-  //       const res = await axios.post()
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  // },[])
 
   return (
     <>
