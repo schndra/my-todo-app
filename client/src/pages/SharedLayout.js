@@ -80,8 +80,13 @@ const SharedLayout = () => {
     setItems(temp);
   };
 
-  const removeTodo = (id) => {
-    setItems(items.filter((item) => item._id !== id));
+  const removeTodo = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/v1/todos/${id}`);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getCounts = () => {
