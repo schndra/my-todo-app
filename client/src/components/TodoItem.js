@@ -5,7 +5,7 @@ import { useOutletContext } from "react-router-dom";
 
 const TodoItem = (props) => {
   const { completedTodo, removeTodo } = useOutletContext();
-  const { id, title, completed } = props;
+  const { _id, title, completed } = props;
 
   return (
     <>
@@ -13,7 +13,7 @@ const TodoItem = (props) => {
         <button
           type="button"
           className="mr-2"
-          onClick={() => completedTodo(id)}
+          onClick={() => completedTodo(_id)}
         >
           {/* if completed true make the check box text-primary */}
           <FaCheckSquare
@@ -34,7 +34,7 @@ const TodoItem = (props) => {
           </p>
           <button
             type="button"
-            onClick={() => removeTodo(id)}
+            onClick={() => removeTodo(_id)}
             className="hover:animate-bounce duration-500"
           >
             <FaTrash className="text-primary " />
