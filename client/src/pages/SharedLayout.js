@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 import { Outlet } from "react-router-dom";
 
 import { v4 as uuidv4 } from "uuid";
@@ -29,12 +30,26 @@ const SharedLayout = () => {
 
   const refContainer = useRef(null);
 
+  const createTodo = async (data) => {
+    console.log(data);
+    try {
+      const res = await axios.post("http://localhost:3001/api/v1/todos", {
+        title: data.title,
+        completed: data.completed,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title) {
       setIsError(true);
     } else {
       const newTodo = { id: uuidv4(), title, completed: false };
+      createTodo(newTodo);
       setItems([...items, newTodo]);
       setTitle("");
       setIsError(false);
@@ -78,6 +93,16 @@ const SharedLayout = () => {
   useEffect(() => {
     getCounts();
   }, [items]);
+
+  // useEffect(()=>{
+  //   const fetchData = async()=>{
+  //     try {
+  //       const res = await axios.post()
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  // },[])
 
   return (
     <>
