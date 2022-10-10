@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <>
       {homeItems.map((item) => {
-        return <TodoItem key={item.id} {...item} />;
+        return <TodoItem key={item._id} {...item} />;
       })}
     </>
   );
