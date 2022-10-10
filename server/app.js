@@ -8,6 +8,10 @@ import todoRouter from "./routes/todo.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-hander.js";
 
+// cors
+import cors from "cors";
+
+app.use(cors());
 app.use(express.json());
 
 // api routes
