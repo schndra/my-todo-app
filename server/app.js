@@ -17,9 +17,9 @@ app.use(express.json());
 // api routes
 app.use("/api/v1/todos", todoRouter);
 
-app.get("/:id", (req, res) => {
-  res.send(`aasdfasf`);
-});
+// app.get("/:id", (req, res) => {
+//   res.send(`aasdfasf`);
+// });
 
 // testing route
 // app.get("/", (req, res) => {

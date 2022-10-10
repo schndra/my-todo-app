@@ -1,6 +1,6 @@
 import Todo from "../models/Todo.js";
 
-export const getTodos = async (req, res) => {
+export const getTodos = async (req, res, next) => {
   try {
     const todo = await Todo.find({});
     res.status(200).json(todo);
@@ -26,6 +26,16 @@ export const getAllTodos = (req, res) => {
   res.send("get all todos");
 };
 
-export const deleteTodo = (req, res) => {
-  res.send("delete todo");
+export const deleteTodo = async (req, res, next) => {
+  const { id: todoID } = req.params;
+  try {
+    const todo = await Todo.findByIdAndDelete({ _id: todoID });
+    if (!todo) {
+      return res.status(404).json({ msg: `No todo with id: ${todoID}` });
+    }
+
+    res.status(200).json({ todo });
+  } catch (error) {
+    next(error);
+  }
 };
